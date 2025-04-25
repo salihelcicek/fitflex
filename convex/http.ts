@@ -11,12 +11,12 @@ const http = httpRouter();
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
 http.route({
-  path: "/clerk-webhook",
+  path: "/fitflexwebhook",
   method: "POST",
   handler: httpAction(async (ctx, request) => {
     const webhookSecret = process.env.CLERK_FITFLEX_SECRET;
     if (!webhookSecret) {
-      throw new Error("Missing CLERK_WEBHOOK_SECRET environment variable");
+      throw new Error("Missing CLERK_FITFLEX_SECRET environment variable");
     }
 
     const svix_id = request.headers.get("svix-id");
