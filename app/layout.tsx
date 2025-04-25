@@ -4,6 +4,7 @@ import "./globals.css";
 import  ConvexClerkProvider  from "@/providers/ConvexClerkProvider";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import { headers } from "next/headers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,10 +16,23 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "FitFlex",
-  description: "A fitness app",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const headersList = await headers();
+  const pathname = headersList.get('x-invoke-path') || '/';
+
+  let title = 'Fitflex';
+
+  if (pathname.startsWith('/profile')) {
+    title = 'Fitflex | Profil';
+  } else if (pathname.startsWith('/generate-program')) {
+    title = 'Fitflex | Program Oluştur';
+  }
+
+  return {
+    title,
+    description: 'Fitflex ile kendi fitness programını oluştur!',
+  };
+}
 
 export default function RootLayout({
   children,

@@ -9,6 +9,12 @@ import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
+
+
+
+
+
+
 const GenerateProgramPage = () => {
   const [callActive, setCallActive] = useState(false);
   const [connecting, setConnecting] = useState(false);
@@ -23,6 +29,7 @@ const GenerateProgramPage = () => {
 
   // SOLUTION to get rid of "Meeting has ended" error
   useEffect(() => {
+    document.title = "Fitflex | Program Oluştur";
     const originalError = console.error;
     // override console.error to ignore "Meeting has ended" errors
     console.error = function (msg, ...args) {
@@ -206,7 +213,7 @@ const GenerateProgramPage = () => {
               </div>
 
               <h2 className="text-xl font-bold text-foreground">Fitflex</h2>
-              <p className="text-sm text-muted-foreground mt-1">American Football Team of Bilkent University Performance Coach</p>
+              <p className="text-sm text-muted-foreground mt-1">Your personal coach</p>
 
               {/* SPEAKING INDICATOR */}
 
