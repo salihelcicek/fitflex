@@ -18,7 +18,7 @@ export default defineSchema({
         v.object({
           day: v.string(),
           routines: v.array(
-            v.object({
+            v.object({ 
               name: v.string(),
               sets: v.optional(v.number()),
               reps: v.optional(v.number()),

@@ -19,9 +19,9 @@ import {
 
 const ProfilePage = () => {
   const { user } = useUser();
-  const userId = user?.id as string;
+  const userId = user?.id;
 
-  const allPlans = useQuery(api.plans.getUserPlans, { userId });
+  const allPlans = useQuery(api.plans.getUserPlans, userId ? { userId } : "skip");
   const [selectedPlanId, setSelectedPlanId] = useState<null | string>(null);
 
   const activePlan = allPlans?.find((plan) => plan.isActive);
@@ -32,11 +32,20 @@ const ProfilePage = () => {
   useEffect(() => {
     document.title = "Fitflex | Profil";
   }, []);
+
+  // Show loading state when user is authenticated but plans are still loading
+  const isLoading = userId && allPlans === undefined;
+
   return (
     <section className="relative z-10 pt-12 pb-32 flex-grow container mx-auto px-4">
       <ProfileHeader user={user} />
 
-      {allPlans && allPlans?.length > 0 ? (
+      {isLoading ? (
+        <div className="flex flex-col items-center justify-center space-y-4 py-12">
+          <div className="size-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-sm text-muted-foreground">Fitness planlarınız yükleniyor...</p>
+        </div>
+      ) : allPlans && allPlans?.length > 0 ? (
         <div className="space-y-8">
           {/* PLAN SELECTOR */}
           <div className="relative backdrop-blur-sm border border-border p-6">
